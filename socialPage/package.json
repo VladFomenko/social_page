@@ -1,0 +1,31 @@
+{
+  "name": "social_page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --output-style compressed -o dist/css src/scss",
+    "serve": "browser-sync start --server --files 'dist/css/*.css, **/*.html'",
+    "start": "npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladFomenko/social_page.git"
+  },
+  "author": "Vlad Fomenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VladFomenko/social_page/issues"
+  },
+  "homepage": "https://github.com/VladFomenko/social_page#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
+    "browser-sync": "^2.26.14",
+    "node-sass": "^6.0.0"
+  }
+}
