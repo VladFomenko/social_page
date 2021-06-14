@@ -1,8 +1,9 @@
-//import {userData} from './baseData.js';
+import {userDataMassive} from './baseData.js';
 
 
 //база днных пользователей
-let userDataMassive = [0];
+//let userDataMassive = [0];
+console.log(userDataMassive);
 
 document.getElementById('userForm').addEventListener('submit', function (e) {
   e.preventDefault();
