@@ -13,4 +13,10 @@ userDataMassive.push(id000001.id);
 console.log(userDataMassive);
 
  */
-export let userDataMassive = [];
+export let userDataMassive = [
+  {
+    id: '0',
+    login: '0',
+    password: '0',
+  }
+];

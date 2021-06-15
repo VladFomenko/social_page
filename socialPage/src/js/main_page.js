@@ -6,3 +6,4 @@ import {userDataMassive} from './baseData.js';
   window.location.href = '../../index.html';
 });
 */
+console.log('массив данных ' + userDataMassive.length);
