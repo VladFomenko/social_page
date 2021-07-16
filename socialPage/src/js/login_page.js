@@ -1,4 +1,4 @@
-import {userDataMassive} from './baseData.js';
+import {addStickyNote, userData, db} from './baseData.js';
 
 
 document.getElementById('userForm').addEventListener('submit', function (e) {
@@ -7,6 +7,8 @@ document.getElementById('userForm').addEventListener('submit', function (e) {
   let login = document.getElementById('login');
   let password = document.getElementById('password');
 
+  console.log(login.value)
+  console.log(password.value)
 
   //проверка логина и пароля к требованиям
   login.style.backgroundColor = login.value.match(/^[a-z]+$/gi) ? '#008000' : '#F9D0C4';
@@ -14,16 +16,22 @@ document.getElementById('userForm').addEventListener('submit', function (e) {
 
 
   //создание данных пользователя
+  /* // попытка сохдания через массив
   let idUser = userDataMassive.length;
   let userData = {
     id: idUser,
     login: login.value,
     password: password.value,
   }
+  */
+  if(login.style.backgroundColor === 'rgb(0, 128, 0)' && password.style.backgroundColor === 'rgb(0, 128, 0)') {
+    addStickyNote(db, login.value, password.value);
+  }
 
 
 
-  //проверк на унильканость
+  //проверк на унильканость через массив
+  /*
   if (login.style.backgroundColor === 'rgb(0, 128, 0)' && password.style.backgroundColor === 'rgb(0, 128, 0)') {
     let sameLogin = userDataMassive.filter((abc) => abc.login === login.value);
     if (sameLogin.length > 0) {
@@ -36,7 +44,9 @@ document.getElementById('userForm').addEventListener('submit', function (e) {
     }
   }
 
-  console.log(userDataMassive.length);
+   */
+
+
 
   /*
     // переход на основную страницу
