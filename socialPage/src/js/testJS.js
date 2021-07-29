@@ -1,19 +1,12 @@
-/*let userData = indexedDB.open("user", 1);
+import { jbl } from './test2Js.js';
 
-//on upgrade needed
-userData.onupgradeneeded = e => {
-  console.log("upgrade is called");
-}
+let c = 0;
 
-//on success
-userData.onsuccess = e => {
-  console.log("success is called");
-}
+let x = 5;
+let y = 3;
+jbl(x, y, c);
+let vasa = jbl(x, y, c);
+console.log(vasa)
 
-//on error
-userData.onerror = e => {
-  console.log("error!");
-}
-
- */
+console.log('ultraTEst_____ ' + c);
 

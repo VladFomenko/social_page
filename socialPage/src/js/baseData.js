@@ -1,31 +1,6 @@
-
-/*
-let userDataObject = {};
-let id000001 = {
-  id: "1",
-  login: "Ivan",
-  password: 123456,
-};
-let  userDataMassive = [];
-
-userDataMassive.push(id000001.id);
-//console.log(userDataMassive[0].login);
-console.log(userDataMassive);
-
-
-
-export let userDataMassive = [
-  {
-    id: '0',
-    login: '0',
-    password: '0',
-  }
-];
-
- */
-
 export let db;
-export let userData = indexedDB.open("users", 1);
+let userData = indexedDB.open("users", 1);
+
 
 //on upgrade needed
 userData.onupgradeneeded = e => {
@@ -45,11 +20,10 @@ userData.onerror = e => {
 }
 
 
-export let addStickyNote = (db, log, pass) => {
+export let addStickyNote =  (db, log, pass) => {
   // Запустим транзакцию базы данных и получите хранилище объектов Notes
   let tx = db.transaction(['notes'], 'readwrite');
   let store = tx.objectStore('notes');
-  console.log(store)
   // Добаляем заметку в хранилище объектов
   let note = {login: log, password: pass};
   store.add(note);
@@ -61,3 +35,40 @@ export let addStickyNote = (db, log, pass) => {
     alert('error storing note ' + event.target.errorCode);
   }
 }
+
+
+//тест поиска
+
+
+export let nameS = (db, arr, log, acc) => {
+
+  // Запустим транзакцию базы данных и получите хранилище объектов Notes
+  let tx = db.transaction(['notes'], 'readonly');
+  let store = tx.objectStore('notes');
+
+  // Настройте запрос, чтобы получить заметку с ключом 1
+  let req = store.getAll();
+
+  req.onsuccess = (event) => {
+    let note = event.target.result;
+
+
+    for (let i = 0; i < note.length; i++) {
+      let x = note[i].login;
+      if (x == log) {
+        acc = 0;
+        break;
+      } else {
+        acc = 1;
+      }
+    }
+
+  }
+// Если мы получим ошибку, например, заметка не существует в хранилище , мы обрабатываем ошибку в обработчике onerror
+  req.onerror = (event) => {
+    alert('error getting note 1 ' + event.target.errorCode);
+  }
+
+};
+
+
