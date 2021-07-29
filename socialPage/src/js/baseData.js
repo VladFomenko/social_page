@@ -19,8 +19,8 @@ userData.onerror = e => {
   alert('error opening database ' + e.target.errorCode);
 }
 
-
-export let addStickyNote =  (db, log, pass) => {
+// добавление в базу данных
+export let addStickyNote = (db, log, pass) => {
   // Запустим транзакцию базы данных и получите хранилище объектов Notes
   let tx = db.transaction(['notes'], 'readwrite');
   let store = tx.objectStore('notes');
@@ -36,15 +36,15 @@ export let addStickyNote =  (db, log, pass) => {
   }
 }
 
-export let nameS = (db, arr, log, acc) => {
+// проверка логина на совпадение
+export let loginCheckDuplicates = (db, log, acc) => {
 
   // Запустим транзакцию базы данных и получите хранилище объектов Notes
   let tx = db.transaction(['notes'], 'readonly');
   let store = tx.objectStore('notes');
 
-
   return new Promise((resolve, reject) => {
-    // Настройте запрос, чтобы получить заметку с ключом 1
+    // Настройте запрос, чтобы получить все ключи
     let req = store.getAll();
 
     req.onsuccess = (event) => {
@@ -62,7 +62,40 @@ export let nameS = (db, arr, log, acc) => {
       }
       resolve(acc);
     }
-// Если мы получим ошибку, например, заметка не существует в хранилище , мы обрабатываем ошибку в обработчике onerror
+// Если мы получим ошибку, например, заметка не существует в хранилище, мы обрабатываем ошибку в обработчике onerror
+    req.onerror = (event) => {
+      reject(alert('error getting note 1 ' + event.target.errorCode));
+    }
+  })
+};
+
+// проверка вторизации(сравнение логина и пароля с базой данных)
+export let authorizationCheck = (db, log, pass, acc) => {
+
+  // Запустим транзакцию базы данных и получите хранилище объектов Notes
+  let tx = db.transaction(['notes'], 'readonly');
+  let store = tx.objectStore('notes');
+
+  return new Promise((resolve, reject) => {
+    // Запрос на получение всех ключей
+    let req = store.getAll();
+
+    req.onsuccess = (event) => {
+      let note = event.target.result;
+
+      for (let i = 0; i < note.length; i++) {
+        let x = note[i].login;
+        let y = note[i].password;
+        if (x === log && y === pass) {
+          acc = 0;
+          break;
+        } else {
+          acc = 1;
+        }
+      }
+      resolve(acc);
+    }
+// Если мы получим ошибку, например, заметка не существует в хранилище, мы обрабатываем ошибку в обработчике onerror
     req.onerror = (event) => {
       reject(alert('error getting note 1 ' + event.target.errorCode));
     }
