@@ -36,39 +36,37 @@ export let addStickyNote =  (db, log, pass) => {
   }
 }
 
-
-//тест поиска
-
-
 export let nameS = (db, arr, log, acc) => {
 
   // Запустим транзакцию базы данных и получите хранилище объектов Notes
   let tx = db.transaction(['notes'], 'readonly');
   let store = tx.objectStore('notes');
 
-  // Настройте запрос, чтобы получить заметку с ключом 1
-  let req = store.getAll();
 
-  req.onsuccess = (event) => {
-    let note = event.target.result;
+  return new Promise((resolve, reject) => {
+    // Настройте запрос, чтобы получить заметку с ключом 1
+    let req = store.getAll();
+
+    req.onsuccess = (event) => {
+      let note = event.target.result;
 
 
-    for (let i = 0; i < note.length; i++) {
-      let x = note[i].login;
-      if (x == log) {
-        acc = 0;
-        break;
-      } else {
-        acc = 1;
+      for (let i = 0; i < note.length; i++) {
+        let x = note[i].login;
+        if (x === log) {
+          acc = 0;
+          break;
+        } else {
+          acc = 1;
+        }
       }
+      resolve(acc);
     }
-
-  }
 // Если мы получим ошибку, например, заметка не существует в хранилище , мы обрабатываем ошибку в обработчике onerror
-  req.onerror = (event) => {
-    alert('error getting note 1 ' + event.target.errorCode);
-  }
-
+    req.onerror = (event) => {
+      reject(alert('error getting note 1 ' + event.target.errorCode));
+    }
+  })
 };
 
 
